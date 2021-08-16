@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { NativeBaseProvider } from 'native-base'
+import TeamStateProvider from './state/TeamStateContext'
+import MyDrawer from './components/MyDrawer'
+import LeagueInfoProvider from './state/LeagueInfoContext'
+import AnnouncementsProvider from './state/AnnouncementsContext'
+import UserProvider from './state/UserProvider'
+import { LogBox } from 'react-native';
+
+
 
 export default function App() {
+  LogBox.ignoreLogs(['Setting a timer', 'VirtualizedLists']);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NavigationContainer>
+      <NativeBaseProvider>
+        <TeamStateProvider>
+          <LeagueInfoProvider>
+            <AnnouncementsProvider>
+              <UserProvider>
+                <MyDrawer />
+              </UserProvider>
+            </AnnouncementsProvider>
+          </LeagueInfoProvider>
+        </TeamStateProvider>
+      </NativeBaseProvider>
+    </NavigationContainer>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
